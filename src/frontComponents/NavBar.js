@@ -45,7 +45,7 @@ class NavBar extends Component {
 
   /** Submits sign up for authentication **/
   submitSignUp = () => {
-    axios.post('/signUp', {
+    axios.post('/user/signUp', {
       email: this.state.email,
       password: this.state.email
     })
