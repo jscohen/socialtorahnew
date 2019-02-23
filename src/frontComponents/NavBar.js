@@ -50,7 +50,7 @@ class NavBar extends Component {
       password: this.state.email
     })
     .then((response) => {
-      console.log(respone);
+      console.log(response);
     })
     .catch((error) => {
       console.log(error);
