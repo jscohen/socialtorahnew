@@ -12,7 +12,11 @@ class NavBar extends Component {
     this.state = {
       showSignUp: false,
       email: '',
-      password: ''
+      password: '',
+      errorMessage: '',
+      showWelcome: false,
+      showError: false,
+      isLoggedIn: false
     };
   }
 
@@ -50,6 +54,20 @@ class NavBar extends Component {
       password: this.state.email
     })
     .then((response) => {
+      if (typeof response.data === 'object') {
+        this.setState({
+          showSignUp: false,
+          email: response.data.email,
+          showWelcome: true,
+          showError: false
+        })
+      }
+      else if (typeof response.data === 'string') {
+        this.setState({
+          errorMessage: response.data,
+          showError: true
+        })
+      }
       console.log(response);
     })
     .catch((error) => {
@@ -62,7 +80,8 @@ class NavBar extends Component {
   render() {
     return (
       <div className="navDiv">
-        <button onClick={this.showSignUp}>Sign Up</button>
+        {this.state.showWelcome ? <p>Welcome {this.state.email}</p> : ''}
+        {this.state.isLoggedIn ? <button onClick={this.showSignUp}>Sign Up</button> : <button onClick={this.logOut}>Log Out</button>}
         {this.state.showSignUp ? (
           <div>
             <label>Email</label> <input type="text" value={this.state.email} onChange={this.setEmail}/>
@@ -70,6 +89,7 @@ class NavBar extends Component {
             <input type="submit" value="Submit" onClick={this.submitSignUp}/>
           </div>
         ): ('')}
+        {this.state.showError ? <p>{this.state.errorMessage}</p> : ''}
       </div>
     );
   }
