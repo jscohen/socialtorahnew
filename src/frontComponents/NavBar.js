@@ -9,7 +9,9 @@ class NavBar extends Component {
   componentDidMount() {
     if (sessionStorage.getItem('Name')) {
       this.setState({
-      email: sessionStorage.getItem('Name')
+      email: sessionStorage.getItem('Name'),
+      isLoggedIn: true,
+      showWelcome: true
       })
     }
   }
@@ -90,7 +92,7 @@ class NavBar extends Component {
     return (
       <div className="navDiv">
         {this.state.showWelcome ? <p>Welcome {this.state.email}</p> : ''}
-        {this.state.isLoggedIn ? <button onClick={this.showSignUp}>Sign Up</button> : <button onClick={this.logOut}>Log Out</button>}
+        {this.state.isLoggedIn ? <button onClick={this.logOut}>Log Out</button> : <button onClick={this.showSignUp}>Sign Up</button>}
         {this.state.showSignUp ? (
           <div>
             <label>Email</label> <input type="text" value={this.state.email} onChange={this.setEmail}/>
