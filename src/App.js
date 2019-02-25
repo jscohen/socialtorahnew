@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import Comments from './frontComponents/Comments';
-import NavBar from './frontComponents/NavBar';
+import NavBar from './frontComponents/Nav/NavBar';
 
 /** Main App class
 *
