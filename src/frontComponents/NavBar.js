@@ -6,6 +6,14 @@ import axios from 'axios';
 * Class to render nav bar
 */
 class NavBar extends Component {
+  componentDidMount() {
+    if (sessionStorage.getItem('Name')) {
+      this.setState({
+      email: sessionStorage.getItem('Name')
+      })
+    }
+  }
+
   /** Constructor  */
   constructor() {
     super();
@@ -61,6 +69,7 @@ class NavBar extends Component {
           showWelcome: true,
           showError: false
         })
+        sessionStorage.setItem('Name', response.data.email);
       }
       else if (typeof response.data === 'string') {
         this.setState({
