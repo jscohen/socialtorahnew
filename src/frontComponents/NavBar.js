@@ -7,11 +7,11 @@ import axios from 'axios';
 */
 class NavBar extends Component {
   componentDidMount() {
-    if (sessionStorage.getItem('Name')) {
+    if (localStorage.getItem('Token') !== null) {
       this.setState({
-      email: sessionStorage.getItem('Name'),
-      isLoggedIn: true,
-      showWelcome: true
+        email: localStorage.getItem('UserName'),
+        isLoggedIn: true,
+        showWelcome: true
       })
     }
   }
@@ -69,9 +69,10 @@ class NavBar extends Component {
           showSignUp: false,
           email: response.data.email,
           showWelcome: true,
-          showError: false
+          isLoggedIn: true
         })
-        sessionStorage.setItem('User', response.data);
+        localStorage.setItem('UserName', response.data.email);
+        localStorage.setItem('Token', response.data.token);
       }
       else if (typeof response.data === 'string') {
         this.setState({
@@ -87,9 +88,18 @@ class NavBar extends Component {
   }
 
   logOut = (event) => {
-    const userToSend = sessionStorage.getItem('User');
-    axios.delete('/signOut', {
+    const userToSend = {'email': localStorage.getItem('UserName'),
+      'token': localStorage.getItem('Token')};
+    axios.delete('/user/signOut', {
       userToSend
+    })
+    .then(() => {
+      localStorage.removeItem('UserName');
+      localStorage.removeItem('Token')
+      this.setState({
+        isLoggedIn: false,
+        showWelcome: false
+      })
     })
   }
 
