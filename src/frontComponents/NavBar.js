@@ -71,7 +71,7 @@ class NavBar extends Component {
           showWelcome: true,
           showError: false
         })
-        sessionStorage.setItem('Name', response.data.email);
+        sessionStorage.setItem('User', response.data);
       }
       else if (typeof response.data === 'string') {
         this.setState({
@@ -85,6 +85,14 @@ class NavBar extends Component {
       console.log(error);
     });
   }
+
+  logOut = (event) => {
+    const userToSend = sessionStorage.getItem('User');
+    axios.delete('/signOut', {
+      userToSend
+    })
+  }
+
   /**
   * @return {void}
   */
