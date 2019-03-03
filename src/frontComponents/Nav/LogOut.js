@@ -7,17 +7,17 @@ import axios from 'axios';
   **/
 class LogOut extends Component {
   constructor() {
-    super();
+    super()
   }
 
   logOut = (event) => {
     const userToSend = {'email': localStorage.getItem('UserName'),
-      'token': localStorage.getItem('Token')};
+      'token': localStorage.getItem('Token')}
     axios.delete('/user/signOut', {
       userToSend
     })
     .then(() => {
-      localStorage.removeItem('UserName');
+      localStorage.removeItem('UserName')
       localStorage.removeItem('Token')
       this.setState({
         isLoggedIn: false,
