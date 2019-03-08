@@ -29,6 +29,7 @@ class NavBar extends Component {
       showWelcome: false,
       showError: false,
       isLoggedIn: false,
+      showSignIn: false
     };
   }
 
@@ -37,6 +38,17 @@ class NavBar extends Component {
     if (!this.state.showSignUp) {
       this.setState({
         showSignUp: true,
+        showSignIn: false
+      });
+    }
+  }
+
+  /** Toggles markup to show sign up labels **/
+  showSignIn = () => {
+    if (!this.state.showSignIn) {
+      this.setState({
+        showSignIn: true,
+        showSignUp: false
       });
     }
   }
@@ -115,7 +127,10 @@ class NavBar extends Component {
       <div className="navDiv">
         {this.state.showWelcome ? <p>Welcome {this.state.email}</p> : ''}
         {this.state.isLoggedIn ?  <button onClick={this.logOut}>Log Out</button> :
-          <button onClick={this.showSignUp}>Sign Up</button>}
+        <div>
+          <button onClick={this.showSignUp}>Sign Up</button>
+          <button onClick={this.showSignIn}>Sign In</button>
+        </div>}
         {this.state.showSignUp ?
            <div>
               <label>Email</label>
@@ -127,6 +142,17 @@ class NavBar extends Component {
                 {this.state.showError ? <p>{this.state.errorMessage}</p> : ''}
               </div>
                 : ('')}
+          {this.state.showSignIn ?
+            <div>
+              <label>Email</label>
+              <input type="text" value={this.state.email} onChange={this.setEmail}/>
+              <label>Password</label>
+              <input type="password" value={this.state.password}
+                onChange={this.setPassword}/>
+              <input type="submit" value="Submit" onClick={this.submitSignIn}/>
+                {this.state.showError ? <p>{this.state.errorMessage}</p> : ''}
+            </div>
+          : ('')}
       </div>
     );
   }
