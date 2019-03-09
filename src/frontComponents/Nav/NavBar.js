@@ -53,6 +53,7 @@ class NavBar extends Component {
     }
   }
 
+  /** Sends server request to log out **/
   logOut = () => {
     axios.delete('/user/signOut', {params: {
         id: localStorage.getItem('UserId'),
@@ -101,6 +102,36 @@ class NavBar extends Component {
     });
   }
 
+  /** Submits request to sign in **/
+  submitSignIn = () => {
+    axios.post('/user/signIn', {
+      email: this.state.email,
+      password: this.state.password
+    })
+    .then((response) => {
+      if (typeof response.data === 'object') {
+        console.log(response.data);
+        this.setState({
+          showSignIn: false,
+          email: response.data.email,
+          showWelcome:true,
+          isLoggedIn: true
+        })
+        localStorage.setItem('UserName', response.data.email);
+        localStorage.setItem('Token', response.data.token);
+        localStorage.setItem('UserId', response.data.id)
+      }
+      if (typeof response.data === 'string') {
+        this.setState({
+          errorMessage: response.data,
+          showError: true
+        })
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  }
   /** Sets email for submission
     * @param={event}
    **/
