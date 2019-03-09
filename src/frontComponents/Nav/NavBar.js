@@ -119,7 +119,7 @@ class NavBar extends Component {
         })
         localStorage.setItem('UserName', response.data.email);
         localStorage.setItem('Token', response.data.token);
-        localStorage.setItem('UserId', response.data.id)
+        localStorage.setItem('UserId', response.data._id)
       }
       if (typeof response.data === 'string') {
         this.setState({
