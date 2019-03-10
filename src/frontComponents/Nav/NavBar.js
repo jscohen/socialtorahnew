@@ -29,7 +29,10 @@ class NavBar extends Component {
       showWelcome: false,
       showError: false,
       isLoggedIn: false,
-      showSignIn: false
+      showSignIn: false,
+      showChangePW: false,
+      changePWMessage: '',
+      showMessage: false
     };
   }
 
@@ -132,6 +135,29 @@ class NavBar extends Component {
       console.log(error);
     })
   }
+
+  /** Submits Change Password Request **/
+  submitChangePW = () => {
+    axios.patch('/user/changePW', {
+      email: this.state.email,
+      password: this.state.password
+    })
+    .then((response) => {
+      if (typeof response.data === 'string') {
+        this.setState({
+          changePWMessage: response.data,
+          showMessage: true,
+          changePW: false
+        })
+      }
+    })
+    .catch((err) => {
+      this.setState({
+        changePWMessage: err.data,
+        showMessage: true
+      })
+    })
+  }
   /** Sets email for submission
     * @param={event}
    **/
@@ -150,6 +176,19 @@ class NavBar extends Component {
     })
   }
 
+  /** Shows the change password markup **/
+  showChangePW = (event) => {
+    if (!this.state.showChangePW) {
+      this.setState({
+        showChangePW: true
+      })
+    } else {
+      this.setState({
+        showChangePW: false
+      })
+    }
+  }
+
   /**
   * @return {void}
   */
@@ -157,7 +196,11 @@ class NavBar extends Component {
     return (
       <div className="navDiv">
         {this.state.showWelcome ? <p>Welcome {this.state.email}</p> : ''}
-        {this.state.isLoggedIn ?  <button onClick={this.logOut}>Log Out</button> :
+        {this.state.isLoggedIn ?
+        <div>
+          <button onClick={this.showChangePW}>Change Password</button>
+          <button onClick={this.logOut}>Log Out</button>
+        </div> :
         <div>
           <button onClick={this.showSignUp}>Sign Up</button>
           <button onClick={this.showSignIn}>Sign In</button>
@@ -184,6 +227,15 @@ class NavBar extends Component {
                 {this.state.showError ? <p>{this.state.errorMessage}</p> : ''}
             </div>
           : ('')}
+          {this.state.showChangePW ?
+            <div>
+              <label>New Password</label>
+              <input type="password" value={this.state.password} onChange={this.setPassword} />
+              <input type="submit" value="Submit" onClick={this.submitChangePW} />
+                {this.state.showMessage ? <p>{this.state.changePWMessage}</p> : ''}
+            </div>
+            : ('')
+          }
       </div>
     );
   }
