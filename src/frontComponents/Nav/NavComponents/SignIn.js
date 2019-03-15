@@ -36,7 +36,8 @@ class SignIn extends Component {
         })
         localStorage.setItem('UserName', response.data.email);
         localStorage.setItem('Token', response.data.token);
-        localStorage.setItem('UserId', response.data._id)
+        localStorage.setItem('UserId', response.data._id);
+        this.props.history.push('/');
       }
       if (typeof response.data === 'string') {
         this.setState({

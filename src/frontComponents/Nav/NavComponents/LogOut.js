@@ -10,15 +10,17 @@ class LogOut extends Component {
     super()
   }
 
-  logOut = (event) => {
-    const userToSend = {'email': localStorage.getItem('UserName'),
-      'token': localStorage.getItem('Token')}
-    axios.delete('/user/signOut', {
-      userToSend
+  /** Sends server request to log out **/
+  logOut = () => {
+    axios.delete('/user/signOut', {params: {
+        id: localStorage.getItem('UserId'),
+        token: localStorage.getItem('Token')
+      }
     })
     .then(() => {
       localStorage.removeItem('UserName')
       localStorage.removeItem('Token')
+      localStorage.removeItem('UserId')
       this.setState({
         isLoggedIn: false,
         showWelcome: false
