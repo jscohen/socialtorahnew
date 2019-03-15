@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import axios from 'axios';
-import SignUp from './frontComponents/Nav/SignUp';
+import SignUp from './frontComponents/Nav/NavComponents/SignUp';
 import {Route, Link, BrowserRouter as Router} from 'react-router-dom';
 
 axios.defaults.baseURL = 'http://localhost:5000';

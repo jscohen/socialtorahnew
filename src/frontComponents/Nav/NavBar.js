@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import '../../App.css';
 import axios from 'axios';
-import SignUp from './SignUp';
-import LogOut from './LogOut';
+import SignUp from './NavComponents/SignUp';
+import LogOut from './NavComponents/LogOut';
 import {Link} from 'react-router-dom';
 
 /**
@@ -38,16 +38,6 @@ class NavBar extends Component {
   }
 
   /** Toggles markup to show sign up labels **/
-  showSignUp = () => {
-    if (!this.state.showSignUp) {
-      this.setState({
-        showSignUp: true,
-        showSignIn: false
-      });
-    }
-  }
-
-  /** Toggles markup to show sign up labels **/
   showSignIn = () => {
     if (!this.state.showSignIn) {
       this.setState({
@@ -73,37 +63,6 @@ class NavBar extends Component {
         showWelcome: false
       })
     })
-  }
-
-  /** Submits sign up for authentication **/
-  submitSignUp = () => {
-    axios.post('/user/signUp', {
-      email: this.state.email,
-      password: this.state.email
-    })
-    .then((response) => {
-      if (typeof response.data === 'object') {
-        this.setState({
-          showSignUp: false,
-          email: response.data.email,
-          showWelcome: true,
-          isLoggedIn: true
-        })
-        localStorage.setItem('UserName', response.data.email);
-        localStorage.setItem('Token', response.data.token);
-        localStorage.setItem('UserId', response.data.id)
-      }
-      else if (typeof response.data === 'string') {
-        this.setState({
-          errorMessage: response.data,
-          showError: true
-        })
-      }
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
   }
 
   /** Submits request to sign in **/
