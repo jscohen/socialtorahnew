@@ -5,6 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import axios from 'axios';
 import SignUp from './frontComponents/Nav/NavComponents/SignUp';
+import SignIn from './frontComponents/Nav/NavComponents/SignIn';
 import {Route, Link, BrowserRouter as Router} from 'react-router-dom';
 
 axios.defaults.baseURL = 'http://localhost:5000';
@@ -16,6 +17,7 @@ const routing = (
     <div>
       <Route exact path="/" component={App} />
       <Route path="/signUp" component={SignUp} />
+      <Route path="/signIn" component={SignIn} />
     </div>
   </Router>
 );
