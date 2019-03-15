@@ -35,6 +35,7 @@ class SignUp extends Component {
         })
         localStorage.setItem('UserName', response.data.email);
         localStorage.setItem('Token', response.data.token);
+        this.props.history.push('/');
       }
       else if (typeof response.data === 'string') {
         this.setState({
@@ -72,14 +73,23 @@ class SignUp extends Component {
    **/
   render() {
     return (
-      <div>
-        <label>Email</label>
-        <input type="text" value={this.state.email} onChange={this.setEmail}/>
-        <label>Password</label>
-        <input type="password" value={this.state.password}
-          onChange={this.setPassword}/>
-        <input type="submit" value="Submit" onClick={this.submitSignUp}/>
-        {this.state.showError ? <p>{this.state.errorMessage}</p> : ''}
+      <div className="App">
+        <div className="App-header">
+        <h3>Enter your name and password to sign up</h3>
+        <div className="labelHeader">
+          <div className="label">
+            <label className="labelText">Email</label>
+            <input className="labelInput" type="text" value={this.state.email} onChange={this.setEmail}/>
+          </div>
+          <div className="label">
+            <label className="labelText">Password</label>
+            <input className="labelInput" type="password" value={this.state.password}
+            onChange={this.setPassword}/>
+          </div>
+        </div>
+          <input type="submit" value="Submit" onClick={this.submitSignUp}/>
+          {this.state.showError ? <p>{this.state.errorMessage}</p> : ''}
+          </div>
       </div>
     );
   };

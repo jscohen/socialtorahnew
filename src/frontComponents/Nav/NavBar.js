@@ -3,6 +3,7 @@ import '../../App.css';
 import axios from 'axios';
 import SignUp from './SignUp';
 import LogOut from './LogOut';
+import {Link} from 'react-router-dom';
 
 /**
 * Class to render nav bar
@@ -202,20 +203,9 @@ class NavBar extends Component {
           <button onClick={this.logOut}>Log Out</button>
         </div> :
         <div>
-          <button onClick={this.showSignUp}>Sign Up</button>
+          <Link to ="/signUp">Sign Up</Link>
           <button onClick={this.showSignIn}>Sign In</button>
         </div>}
-        {this.state.showSignUp ?
-           <div>
-              <label>Email</label>
-              <input type="text" value={this.state.email} onChange={this.setEmail}/>
-              <label>Password</label>
-              <input type="password" value={this.state.password}
-                onChange={this.setPassword}/>
-              <input type="submit" value="Submit" onClick={this.submitSignUp}/>
-                {this.state.showError ? <p>{this.state.errorMessage}</p> : ''}
-              </div>
-                : ('')}
           {this.state.showSignIn ?
             <div>
               <label>Email</label>
