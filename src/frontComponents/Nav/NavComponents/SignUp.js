@@ -35,6 +35,7 @@ class SignUp extends Component {
         })
         localStorage.setItem('UserName', response.data.email);
         localStorage.setItem('Token', response.data.token);
+        localStorage.setItem('UserId', response.data.id);
         this.props.history.push('/');
       }
       else if (typeof response.data === 'string') {

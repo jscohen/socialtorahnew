@@ -65,37 +65,6 @@ class NavBar extends Component {
     })
   }
 
-  /** Submits request to sign in **/
-  submitSignIn = () => {
-    axios.post('/user/signIn', {
-      email: this.state.email,
-      password: this.state.password
-    })
-    .then((response) => {
-      if (typeof response.data === 'object') {
-        console.log(response.data);
-        this.setState({
-          showSignIn: false,
-          email: response.data.email,
-          showWelcome:true,
-          isLoggedIn: true
-        })
-        localStorage.setItem('UserName', response.data.email);
-        localStorage.setItem('Token', response.data.token);
-        localStorage.setItem('UserId', response.data._id)
-      }
-      if (typeof response.data === 'string') {
-        this.setState({
-          errorMessage: response.data,
-          showError: true
-        })
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-  }
-
   /** Submits Change Password Request **/
   submitChangePW = () => {
     axios.patch('/user/changePW', {
@@ -116,23 +85,6 @@ class NavBar extends Component {
         changePWMessage: err.data,
         showMessage: true
       })
-    })
-  }
-  /** Sets email for submission
-    * @param={event}
-   **/
-  setEmail = (event) => {
-    this.setState({
-      email: event.target.value
-    })
-  }
-
-  /** Sets password for submission of sign up
-    * @param={event}
-   **/
-  setPassword = (event) => {
-    this.setState({
-      password: event.target.value
     })
   }
 
@@ -163,19 +115,8 @@ class NavBar extends Component {
         </div> :
         <div>
           <Link to ="/signUp">Sign Up</Link>
-          <button onClick={this.showSignIn}>Sign In</button>
+          <Link to ="/signIn">Sign In</Link>
         </div>}
-          {this.state.showSignIn ?
-            <div>
-              <label>Email</label>
-              <input type="text" value={this.state.email} onChange={this.setEmail}/>
-              <label>Password</label>
-              <input type="password" value={this.state.password}
-                onChange={this.setPassword}/>
-              <input type="submit" value="Submit" onClick={this.submitSignIn}/>
-                {this.state.showError ? <p>{this.state.errorMessage}</p> : ''}
-            </div>
-          : ('')}
           {this.state.showChangePW ?
             <div>
               <label>New Password</label>
