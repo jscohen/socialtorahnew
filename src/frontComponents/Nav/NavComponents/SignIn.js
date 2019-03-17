@@ -76,7 +76,7 @@ class SignIn extends Component {
     return (
       <div className="App">
         <div className="App-header">
-        <h3>Enter your name and password to sign up</h3>
+        <h3>Enter your name and password to sign in</h3>
         <div className="labelHeader">
           <div className="label">
             <label className="labelText">Email</label>
