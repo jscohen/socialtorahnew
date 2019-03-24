@@ -3,7 +3,7 @@ import '../../App.css';
 import axios from 'axios';
 import SignUp from './NavComponents/SignUp';
 import LogOut from './NavComponents/LogOut';
-import {Link} from 'react-router-dom';
+import {Route, Link, BrowserRouter as Router} from 'react-router-dom';
 
 /**
 * Class to render nav bar
@@ -23,28 +23,16 @@ class NavBar extends Component {
   constructor() {
     super();
     this.state = {
-      showSignUp: false,
       email: '',
       password: '',
       errorMessage: '',
       showWelcome: false,
       showError: false,
       isLoggedIn: false,
-      showSignIn: false,
       showChangePW: false,
       changePWMessage: '',
       showMessage: false
     };
-  }
-
-  /** Toggles markup to show sign up labels **/
-  showSignIn = () => {
-    if (!this.state.showSignIn) {
-      this.setState({
-        showSignIn: true,
-        showSignUp: false
-      });
-    }
   }
 
   /** Sends server request to log out **/
@@ -114,8 +102,12 @@ class NavBar extends Component {
           <button onClick={this.logOut}>Log Out</button>
         </div> :
         <div>
+        <Route>
           <Link to ="/signUp">Sign Up</Link>
+        </Route>
+        <Route>
           <Link to ="/signIn">Sign In</Link>
+        </Route>
         </div>}
           {this.state.showChangePW ?
             <div>
