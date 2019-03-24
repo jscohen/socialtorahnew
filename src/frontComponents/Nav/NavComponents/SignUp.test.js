@@ -2,6 +2,8 @@ import React from 'react';
 import SignUp from './SignUp';
 import ReactDOM from 'react-dom';
 import {shallow} from 'enzyme';
+import axios from 'axios';
+import signUpRequest from './__mocks__/signUpRequest';
 
 describe('Renders Component without crashing and takes input', () => {
   const emailEvent = {
@@ -37,6 +39,30 @@ describe('Renders Component without crashing and takes input', () => {
 });
 
 describe('API Call works properly', () => {
+  jest.mock('./__mocks__/signUpRequest');
+  const goodParams = {
+    email: 'Jon',
+    password: 'Test',
+  };
+
+  const badParams = {
+    email: 'Jon',
+  };
+
+  it('Creates successful API call with valid input', () => {
+    return signUpRequest(goodParams).then((response) => {
+      expect(response).toEqual(goodParams.email);
+    });
+  });
+
+  it('Creates failed API call with invalid input', () => {
+    return expect(signUpRequest(badParams)).rejects.toThrow('Invalid Input');
+  });
+});
+
+describe('DOM Functions Properly', () => {
+  const signUp = shallow(<SignUp />);
+  const componentInstance = signUp.instance();
   const emailEvent = {
     target: {
       value: 'testEmail',
@@ -49,26 +75,18 @@ describe('API Call works properly', () => {
     },
   };
 
-  const signUp = shallow(<SignUp />);
-  const instance = signUp.instance();
-  instance.setEmail(emailEvent);
-  instance.setPassword(passwordEvent);
-
-  const returnedObject = {
-    data: {
-      email: 'testEmail',
-      id: expect.any(String),
-      token: expect.any(String),
-    },
+  const goodParams = {
+    email: 'Jon',
+    password: 'Test',
   };
 
-  it('Creates successful API call with valid input', () => {
-    expect(instance.state.showError).toBe('');
-    expect(instance.state.errorMessage).toBe('');
-    expect(instance.state.email).toBe('testEmail');
-    instance.submitSignUp();
-    expect(instance.state.showSignUp).toBe(false);
-    expect(instance.state.showWelcome).toBe(true);
-    expect(instance.state.isLoggedIn).toBe(true);
+  const badParams = {
+    email: 'Jon',
+  };
+
+  it('Shows error in dom with band input', () => {
+    componentInstance.state.showError = true;
+    componentInstance.state.errorMessage = 'Invalid Input';
+    expect(signUp.exists('.errorMessage')).toEqual(true);
   });
 });

@@ -14,7 +14,7 @@ class SignUp extends Component {
     this.state = {
       email: '',
       password: '',
-      showError: '',
+      showError: false,
       errorMessage: ''
     }
   }
@@ -89,7 +89,7 @@ class SignUp extends Component {
           </div>
         </div>
           <input type="submit" value="Submit" onClick={this.submitSignUp}/>
-          {this.state.showError ? <p>{this.state.errorMessage}</p> : ''}
+          {this.state.showError ? <p className="errorMessage">{this.state.errorMessage}</p> : ''}
           </div>
       </div>
     );
